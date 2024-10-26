@@ -2,7 +2,7 @@ import { tbl_usuario } from "../models/tbl_usuario.js";
 import { tbl_empleado } from "../models/tbl_empleado.js";
 import { tbl_asignarrol } from "../models/tbl_asignarrol.js";
 import { tbl_miembroequipo } from "../models/tbl_miembroequipo.js";
-import bcrypt from "bcrypt"; // Para comparar la contraseña hasheada
+import bcrypt from "bcryptjs"; // Para comparar la contraseña hasheada
 import jwt from "jsonwebtoken"; // Para generar tokens de sesión
 import { transporter } from "../services/mailer.js";
 

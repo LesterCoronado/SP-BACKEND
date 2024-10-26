@@ -4,7 +4,7 @@ import { tbl_asignarrol } from "../models/tbl_asignarrol.js";
 import { transporter } from "../services/mailer.js";
 import { tbl_rol } from "../models/tbl_rol.js";
 import { sequelize } from "../db.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 export const getUsuarios = async (req, res) => {
   try {

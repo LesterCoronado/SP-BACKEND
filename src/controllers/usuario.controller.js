@@ -230,7 +230,7 @@ export const createUser = async (req, res) => {
     <p>Tu usuario es: <strong style="text-decoration: none;">${empleado.correo}</strong></p>
     <p>Tu clave de acceso es: <strong>${contraseña}</strong></p>
     
-    <a href="http://localhost:5173/login" target="_blank" style="display: inline-block; 
+    <a href="https://testzen.netlify.app/login" target="_blank" style="display: inline-block; 
     margin-top: 15px; 
     background-color: blue; 
     color: white; 

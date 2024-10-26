@@ -64,7 +64,7 @@ export const login = async (req, res) => {
         idMiembroEquipo: miembroEquipo ? miembroEquipo.idMiembroEquipo : null,
       },
       process.env.JWT_SECRET, // Usando la variable de entorno para el secreto
-      { expiresIn: "1h" } // Expiración del token
+      { expiresIn: "8h" } // Expiración del token
     );
 
     // 6. Responder con éxito y enviar el token

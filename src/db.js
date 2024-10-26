@@ -10,5 +10,8 @@ import {
 export const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   host: DB_HOST,
   dialect: DB_DIALECT,
+  dialectOptions: {
+    connectTimeout: 10000, // Ajusta este valor según sea necesario
+  },
   logging: false, 
 });

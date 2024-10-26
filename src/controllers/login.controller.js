@@ -1,10 +1,9 @@
 import { tbl_usuario } from "../models/tbl_usuario.js";
 import { tbl_empleado } from "../models/tbl_empleado.js";
 import { tbl_asignarrol } from "../models/tbl_asignarrol.js";
-import {tbl_miembroequipo} from "../models/tbl_miembroequipo.js";
+import { tbl_miembroequipo } from "../models/tbl_miembroequipo.js";
 import bcrypt from "bcrypt"; // Para comparar la contraseña hasheada
 import jwt from "jsonwebtoken"; // Para generar tokens de sesión
-import nodemailer from "nodemailer"; // Para enviar correos electrónicos
 import { transporter } from "../services/mailer.js";
 
 export const login = async (req, res) => {
@@ -56,10 +55,14 @@ export const login = async (req, res) => {
       where: { idUsuario: usuario.idUsuario },
     });
 
-
     // 5. Generar un token JWT (opcional, para manejo de sesiones)
     const token = jwt.sign(
-      { idUsuario: usuario.idUsuario, idEmpleado: empleado.idEmpleado, idRol:idRol, idMiembroEquipo: miembroEquipo.idMiembroEquipo },
+      {
+        idUsuario: usuario.idUsuario,
+        idEmpleado: empleado.idEmpleado,
+        idRol: idRol,
+        idMiembroEquipo: miembroEquipo ? miembroEquipo.idMiembroEquipo : null,
+      },
       process.env.JWT_SECRET, // Usando la variable de entorno para el secreto
       { expiresIn: "1h" } // Expiración del token
     );
@@ -167,9 +170,13 @@ export const resetPassword = async (req, res) => {
 
   jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
     if (err) {
-       // Verifica si el error es por token expirado
-       if (err.name === 'TokenExpiredError') {
-        return res.status(401).json({ mensaje: "El token ha expirado. Por favor, solicite uno nuevo." });
+      // Verifica si el error es por token expirado
+      if (err.name === "TokenExpiredError") {
+        return res
+          .status(401)
+          .json({
+            mensaje: "El token ha expirado. Por favor, solicite uno nuevo.",
+          });
       }
       return res.sendStatus(403); // Forbidden
     }

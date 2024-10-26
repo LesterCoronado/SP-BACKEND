@@ -1,5 +1,4 @@
 import { tbl_areatrabajo } from './tbl_areatrabajo.js';
-import { tbl_asignarrecurso } from './tbl_asignarrecurso.js';
 import { tbl_asignarrol } from './tbl_asignarrol.js';
 import { tbl_cliente } from './tbl_cliente.js';
 import { tbl_equipo } from './tbl_equipo.js';
@@ -18,7 +17,6 @@ import { tbl_equipoproyecto } from './tbl_equipoproyecto.js';
 export function initModels(sequelize) {
   // Inicialización de modelos
   tbl_areatrabajo;
-  tbl_asignarrecurso;
   tbl_asignarrol;
   tbl_cliente;
   tbl_equipo;
@@ -52,8 +50,6 @@ export function initModels(sequelize) {
   tbl_equipoproyecto.belongsTo(tbl_proyecto, { foreignKey: "idProyecto", as: "proyecto" });
   tbl_proyecto.hasMany(tbl_equipoproyecto, { foreignKey: "idProyecto", as: "equipoproyectos" });
 
-  tbl_asignarrecurso.belongsTo(tbl_equipo, { as: "idEquipo_tbl_equipo", foreignKey: "idEquipo" });
-  tbl_equipo.hasMany(tbl_asignarrecurso, { as: "tbl_asignarrecursos", foreignKey: "idEquipo" });
   
   tbl_miembroequipo.belongsTo(tbl_equipo, { as: "idEquipo_tbl_equipo", foreignKey: "idEquipo" });
   tbl_equipo.hasMany(tbl_miembroequipo, { as: "tbl_miembroequipos", foreignKey: "idEquipo" });
@@ -79,8 +75,6 @@ export function initModels(sequelize) {
   tbl_empleado.hasMany(tbl_usuario, { as: 'tbl_usuarios', foreignKey: 'idEmpleado' });
   
   
-  tbl_asignarrecurso.belongsTo(tbl_proyecto, { as: "idProyecto_tbl_proyecto", foreignKey: "idProyecto" });
-  tbl_proyecto.hasMany(tbl_asignarrecurso, { as: "tbl_asignarrecursos", foreignKey: "idProyecto" });
   
   tbl_prueba.belongsTo(tbl_proyecto, { as: "idProyecto_tbl_proyecto", foreignKey: "idProyecto" });
   tbl_proyecto.hasMany(tbl_prueba, { as: "tbl_prueba", foreignKey: "idProyecto" });
@@ -106,7 +100,6 @@ export function initModels(sequelize) {
 
   return {
     tbl_areatrabajo,
-    tbl_asignarrecurso,
     tbl_asignarrol,
     tbl_cliente,
     tbl_equipo,

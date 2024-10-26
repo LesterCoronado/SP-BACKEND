@@ -1,6 +1,7 @@
 import { tbl_usuario } from "../models/tbl_usuario.js";
 import { tbl_empleado } from "../models/tbl_empleado.js";
 import { tbl_asignarrol } from "../models/tbl_asignarrol.js";
+import { transporter } from "../services/mailer.js";
 import { tbl_rol } from "../models/tbl_rol.js";
 import { sequelize } from "../db.js";
 import bcrypt from "bcrypt";
@@ -184,7 +185,70 @@ export const createUser = async (req, res) => {
       { transaction: t }
     );
 
+    const info = await transporter.sendMail({
+      from: '"Soporte TestZen" <lcoronadoj@miumg.edu.gt>', // sender address
+      to: empleado.correo, // list of receivers
+      subject: "¡Bienvenido a TestZen!", // Subject line
+      text: "Tu cuenta ha sido creada exitosamente en nuestro sistema. Estamos emocionados de tenerte con nosotros.", // plain text body
+      html: `     
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif; /* Cambia a la fuente que prefieras */
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5; /* Color de fondo suave */
+    }
+    .container {
+      max-width: 800px; /* Ancho máximo del contenedor */
+      margin: 0 auto; /* Centramos el contenedor */
+      padding: 10px; /* Agregamos padding alrededor */
+      background-color: #ffffff; /* Fondo blanco para el contenido */
+      border-radius: 8px; /* Bordes redondeados */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+    }
+    h1 {
+      
+      color: #333; /* Color del título */
+    }
+    p {
+      line-height: 1.5; /* Mejorar la legibilidad */
+      color: #555; /* Color del texto */
+    }
+    .footer {
+      text-align: center; /* Centrar el pie de página */
+      margin-top: 20px; /* Espacio arriba del pie de página */
+    }
+   
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>¡Hola, ${empleado.nombre}!</h1>
+    <p>Tu cuenta ha sido creada exitosamente en nuestro sistema. Estamos emocionados de tenerte con nosotros.</p>
+    <p>Tu usuario es: <strong style="text-decoration: none;">${empleado.correo}</strong></p>
+    <p>Tu clave de acceso es: <strong>${contraseña}</strong></p>
+    
+    <a href="http://localhost:5173/login" target="_blank" style="display: inline-block; 
+    margin-top: 15px; 
+    background-color: blue; 
+    color: white; 
+    padding: 10px 20px;
+    text-decoration: none; 
+    border-radius: 5px;">Visita nuestro sitio</a>
+
+    <div class="footer">
+      <p>Saludos cordiales,<br>El equipo de TestZen</p>
+    </div>
+  </div>
+</body>
+</html>
+`,
+    });
+
     // Si todo va bien, confirmamos los cambios
+
     await t.commit();
     res.status(201).json({ message: "Usuario creado correctamente" });
   } catch (error) {
@@ -199,7 +263,7 @@ export const editUser = async (req, res) => {
   const { idUsuario } = req.params; // Suponiendo que el ID del usuario se pasa en los parámetros de la URL
   const {
     nombre,
-    apellido, 
+    apellido,
     correo,
     telefono,
     fechaNac,
@@ -328,4 +392,3 @@ export const deleteUser = async (req, res) => {
     res.status(500).json({ message: "Error al eliminar el usuario" });
   }
 };
-

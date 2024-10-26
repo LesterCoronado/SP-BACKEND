@@ -9,7 +9,7 @@ import app from './app.js';
 
 async function main() {
   try {
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ alter: true });
     await sequelize.authenticate();
     dotenv.config();
     console.log("Connection has been established successfully!.");

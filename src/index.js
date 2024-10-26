@@ -4,9 +4,7 @@ import {
   PORT
 } from "./config.js";
 import dotenv from 'dotenv';
-
 const models = initModels(sequelize);  // Inicializa todos los modelos
-
 import app from './app.js';
 
 async function main() {
@@ -14,7 +12,8 @@ async function main() {
     await sequelize.sync({ alter: true });
     await sequelize.authenticate();
     dotenv.config();
-    console.log("Connection has been established successfully.");
+    console.log("Connection has been established successfully!.");
+    console.log("Server running on port 3000");
     app.listen(PORT, () => {
       console.log(`Example app listening on port ${PORT}`)
     })

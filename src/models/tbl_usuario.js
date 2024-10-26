@@ -8,10 +8,6 @@ export const tbl_usuario = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      references: {
-        model: 'tbl_asignarrolusuario',
-        key: 'idUsuario'
-      }
     },
     idEmpleado: {
       type: DataTypes.INTEGER,

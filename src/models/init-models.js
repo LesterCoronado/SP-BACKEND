@@ -17,7 +17,6 @@ import { tbl_equipoproyecto } from './tbl_equipoproyecto.js';
 export function initModels(sequelize) {
   // Inicialización de modelos
   tbl_areatrabajo;
-  tbl_asignarrol;
   tbl_cliente;
   tbl_equipo;
   tbl_error;
@@ -30,11 +29,10 @@ export function initModels(sequelize) {
   tbl_rol;
   tbl_usuario;
   tbl_equipoproyecto;
+  tbl_asignarrol;
 
   // Definir las asociaciones
-  // tbl_asignarrol.belongsToMany(tbl_empleado, { as: 'empleadoRol', through: tbl_usuario, foreignKey: "idUsuario", otherKey: "idEmpleado" });
-  // tbl_empleado.belongsToMany(tbl_asignarrol, { as: 'idUsuario_tbl_asignarrolusuarios', through: tbl_usuario, foreignKey: "idEmpleado", otherKey: "idUsuario" });
-  
+
   tbl_equipo.belongsTo(tbl_areatrabajo, { as: "idAreaTrabajo_tbl_areatrabajo", foreignKey: "idAreaTrabajo" });
   tbl_areatrabajo.hasMany(tbl_equipo, { as: "tbl_equipos", foreignKey: "idAreaTrabajo" });
   
@@ -55,9 +53,7 @@ export function initModels(sequelize) {
   tbl_equipo.hasMany(tbl_miembroequipo, { as: "tbl_miembroequipos", foreignKey: "idEquipo" });
   
 
-  // tbl_errorprueba.belongsTo(tbl_proyecto, { as: "idProyecto_tbl_proyecto", foreignKey: "idProyecto" });
-  // tbl_proyecto.hasMany(tbl_errorprueba, { as: "tbl_errorprueba", foreignKey: "idproyecto" });
-  
+ 
 
   tbl_actividad.belongsTo(tbl_proyecto, { as: "idProyecto_tbl_actividad", foreignKey: "idProyecto" });
   tbl_proyecto.hasMany(tbl_actividad, { as: "tbl_actividad", foreignKey: "idProyecto" });
@@ -91,9 +87,7 @@ export function initModels(sequelize) {
   tbl_asignarrol.belongsTo(tbl_usuario, { as: "usuario", foreignKey: "idUsuario" });
   tbl_usuario.hasMany(tbl_asignarrol, { as: "tbl_asignarrols", foreignKey: "idUsuario" });
   
-  // tbl_usuario.belongsTo(tbl_asignarrol, { as: "idUsuario_tbl_asignarrolusuario", foreignKey: "idUsuario" });
-  // tbl_asignarrol.hasMany(tbl_usuario, { as: "tbl_usuarios", foreignKey: "idUsuario" });
-  
+
 
   tbl_miembroequipo.belongsTo(tbl_usuario, { as: "usuario", foreignKey: "idUsuario" });
   tbl_usuario.hasMany(tbl_miembroequipo, { as: "tbl_miembroequipos", foreignKey: "idUsuario" });
